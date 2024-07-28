@@ -104,7 +104,6 @@ async function update(gig) {
 async function addGigMsg(gigId, msg) {
     try {
         const criteria = { _id: ObjectId.createFromHexString(gigId) }
-        msg.id = makeId()
         
         const collection = await dbService.getCollection('gig')
         await collection.updateOne(criteria, { $push: { msgs: msg } })

@@ -39,6 +39,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
 app.use('/api/gig', gigRoutes)
+app.use('/api/order', orderRoutes)
 
 setupSocketAPI(server)
 
@@ -47,13 +48,14 @@ setupSocketAPI(server)
 // it will still serve the index.html file
 // and allow vue/react-router to take it from there
 
-// app.get('/**', (req, res) => {
-//     res.sendFile(path.resolve('public/index.html'))
-// })
+app.get('/**', (req, res) => {
+    res.sendFile(path.resolve('public-react/index.html'))
+})
 
 import { logger } from './services/logger.service.js'
-const port = process.env.PORT || 3031
+import { orderRoutes } from './api/order/order.routes.js'
+const port = process.env.PORT || 3030
 
 server.listen(port, () => {
-    logger.info('Server is running on port: ' + port)
+    logger.info(`Server listening on port http://127.0.0.1:${port}/`)
 })

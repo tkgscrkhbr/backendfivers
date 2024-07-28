@@ -1,42 +1,42 @@
-[
-    {
-      "_id": "u101",
-      "fullname": "Idan Dujovne",
-      "imgUrl": "../../assets/img/profile.png",
-      "username": "idan",
-      "password": "1234",
-      "level": "basic",
-      "isSeller": true,
-      "isAdmin": false,
-      "country": "Afghanistan",
-      "memberSince": "july",
-      "description": "Unlock stunning visuals with our top-notch carousel design service! We create interactive and engaging carousels with seamless transitions and responsive thumbnails. Perfect for showcasing your products or portfolio. Enhance user experience and capture attention effortlessly. Let's bring your vision to life with precision and creativity!"
-    },
-    {
-      "_id": "u102",
-      "fullname": "Elad Berliner",
-      "imgUrl": "../../assets/img/profile.png",
-      "username": "elad",
-      "password": "1234",
-      "level": "basic",
-      "isSeller": true,
-      "isAdmin": false,
-      "country": "Israel",
-      "memberSince": "july",
-      "description": "Unlock stunning visuals with our top-notch carousel design service! We create interactive and engaging carousels with seamless transitions and responsive thumbnails. Perfect for showcasing your products or portfolio. Enhance user experience and capture attention effortlessly. Let's bring your vision to life with precision and creativity!"
-    },
-    {
-      "_id": "u102", 
-      "fullname": "Omri Nadav",
-      "imgUrl": "../../assets/img/profile.png",
-      "username": "elad", 
-      "password": "1234",
-      "level": "basic",
-      "isSeller": false,
-      "isAdmin": true,
-      "country": "disneyland",
-      "memberSince": "july",
-      "description": "Unlock stunning visuals with our top-notch carousel design service! We create interactive and engaging carousels with seamless transitions and responsive thumbnails. Perfect for showcasing your products or portfolio. Enhance user experience and capture attention effortlessly. Let's bring your vision to life with precision and creativity!"
-    }
-  ]
-  
+  [
+      {
+
+        "fullname": "Idan Dujovne",
+        "imgUrl": "../../assets/img/profile.png",
+        "username": "idan",
+        "password": "1234",
+        "level": "basic",
+        "isSeller": true,
+        "isAdmin": false,
+        "country": "Afghanistan",
+        "memberSince": "july",
+        "description": "Unlock stunning visuals with our top-notch carousel design service! We create interactive and engaging carousels with seamless transitions and responsive thumbnails. Perfect for showcasing your products or portfolio. Enhance user experience and capture attention effortlessly. Let's bring your vision to life with precision and creativity!"
+      },
+      {
+
+        "fullname": "Elad Berliner",
+        "imgUrl": "../../assets/img/profile.png",
+        "username": "elad",
+        "password": "1234",
+        "level": "basic",
+        "isSeller": true,
+        "isAdmin": false,
+        "country": "Israel",
+        "memberSince": "july",
+        "description": "Unlock stunning visuals with our top-notch carousel design service! We create interactive and engaging carousels with seamless transitions and responsive thumbnails. Perfect for showcasing your products or portfolio. Enhance user experience and capture attention effortlessly. Let's bring your vision to life with precision and creativity!"
+      },
+      {
+
+        "fullname": "Omri Nadav",
+        "imgUrl": "../../assets/img/profile.png",
+        "username": "elad", 
+        "password": "1234",
+        "level": "basic",
+        "isSeller": false,
+        "isAdmin": true,
+        "country": "disneyland",
+        "memberSince": "july",
+        "description": "Unlock stunning visuals with our top-notch carousel design service! We create interactive and engaging carousels with seamless transitions and responsive thumbnails. Perfect for showcasing your products or portfolio. Enhance user experience and capture attention effortlessly. Let's bring your vision to life with precision and creativity!"
+      }
+    ]
+    
