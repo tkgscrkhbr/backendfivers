@@ -41,13 +41,18 @@ export async function addOrder(req, res) {
 
 export async function updateOrder(req, res) {
     try {
-        const { orderId, status } = req.body;
+        const orderId = req.params.id;
+        const { status } = req.body; // Destructure status from req.body
         const order = await orderService.getById(orderId);
 
-        // Check if the user is authorized to update this order
-        if (order.buyer._id !== req.user._id && !req.user.isAdmin) {
+        if (!order) {
+            return res.status(404).send({ err: 'Order not found' });
+        }  if (order.buyer._id !== req.user._id && 
+            order.owner.fullname !== req.user.fullname && 
+            !req.user.isAdmin) {
             return res.status(403).send({ err: 'Not authorized to update this order' });
         }
+        
 
         const updatedOrder = await orderService.update(orderId, status);
         res.json(updatedOrder);

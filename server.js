@@ -49,7 +49,7 @@ setupSocketAPI(server)
 // and allow vue/react-router to take it from there
 
 app.get('/**', (req, res) => {
-    res.sendFile(path.resolve('public-react/index.html'))
+    res.sendFile(path.resolve('public/index.html'))
 })
 
 import { logger } from './services/logger.service.js'
