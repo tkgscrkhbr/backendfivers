@@ -29,8 +29,6 @@ export async function getGigById(req, res) {
     }
 }
 
-
-
 export async function addGig(req, res) {
     const { loggedinUser, body: gig } = req
 
@@ -46,6 +44,7 @@ export async function addGig(req, res) {
 
 export async function updateGig(req, res) {
     const { loggedinUser, body: gig } = req
+    // console.log(loggedinUser);
     const { _id: userId, isAdmin } = loggedinUser
 
     if (!isAdmin && gig.owner._id !== userId) {

@@ -1,29 +1,30 @@
-import { config } from '../config/index.js'
-import { logger } from '../services/logger.service.js'
-import { asyncLocalStorage } from '../services/als.service.js'
+import { config } from '../config/index.js';
+import { logger } from '../services/logger.service.js';
+import { asyncLocalStorage } from '../services/als.service.js';
 
 export function requireAuth(req, res, next) {
-	// const { loggedinUser } = asyncLocalStorage.getStore()
-	const { loggedinUser } = true
-	req.loggedinUser = true
-	// req.loggedinUser = loggedinUser
+    const store = asyncLocalStorage.getStore();
+    const loggedinUser = store ? store.loggedinUser : null;
 
-	if (config.isGuestMode && !loggedinUser) {
-		req.loggedinUser = { _id: '', fullname: 'Guest' }
-		return next()
-	}
-	if (!loggedinUser) return res.status(401).send('Not Authenticated')
-	next()
+    if (config.isGuestMode && !loggedinUser) {
+        req.user = { _id: '', fullname: 'Guest' };
+        return next();
+    }
+    if (!loggedinUser) return res.status(401).send('Not Authenticated');
+
+    req.user = loggedinUser; // Attach user info to the request object
+    next();
 }
 
 export function requireAdmin(req, res, next) {
-	const { loggedinUser } = asyncLocalStorage.getStore()
-    
-	if (!loggedinUser) return res.status(401).send('Not Authenticated')
-	if (!loggedinUser.isAdmin) {
-		logger.warn(loggedinUser.fullname + 'attempted to perform admin action')
-		res.status(403).end('Not Authorized')
-		return
-	}
-	next()
+    const store = asyncLocalStorage.getStore();
+    const loggedinUser = store ? store.loggedinUser : null;
+
+    if (!loggedinUser) return res.status(401).send('Not Authenticated');
+    if (!loggedinUser.isAdmin) {
+        logger.warn(`${loggedinUser.fullname} attempted to perform admin action`);
+        return res.status(403).send('Not Authorized');
+    }
+    req.user = loggedinUser; // Attach user info to the request object
+    next();
 }

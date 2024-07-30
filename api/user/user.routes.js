@@ -1,14 +1,12 @@
-import express from 'express'
+import express from 'express';
+import { requireAuth, requireAdmin } from '../../middlewares/requireAuth.middleware.js';
+import { getUser, getUsers, deleteUser, updateUser } from './user.controller.js';
 
-import { requireAuth, requireAdmin } from '../../middlewares/requireAuth.middleware.js'
+const router = express.Router();
 
-import { getUser, getUsers, deleteUser, updateUser } from './user.controller.js'
+router.get('/', getUsers);
+router.get('/:id', getUser);
+router.put('/:id', requireAuth, updateUser);
+router.delete('/:id', requireAuth, requireAdmin, deleteUser);
 
-const router = express.Router()
-
-router.get('/', getUsers)
-router.get('/:id', getUser)
-router.put('/:id', requireAuth, updateUser)
-router.delete('/:id', requireAuth, requireAdmin, deleteUser)
-
-export const userRoutes = router
+export const userRoutes = router;

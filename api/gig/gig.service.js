@@ -1,7 +1,5 @@
 import { ObjectId } from 'mongodb'
-
 import { logger } from '../../services/logger.service.js'
-import { makeId } from '../../services/util.service.js'
 import { dbService } from '../../services/db.service.js'
 import { asyncLocalStorage } from '../../services/als.service.js'
 
@@ -23,10 +21,10 @@ async function query(filterBy = { txt: '' }) {
         const sort = _buildSort(filterBy)
 
         const collection = await dbService.getCollection('gig')
-        var gigCursor = await collection.find(criteria, { sort })
+        let gigCursor = collection.find(criteria, { sort })
 
         if (filterBy.pageIdx !== undefined) {
-            gigCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
+            gigCursor = gigCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
         }
 
         const gigs = await gigCursor.toArray()
@@ -44,7 +42,9 @@ async function getById(gigId) {
         const collection = await dbService.getCollection('gig')
         const gig = await collection.findOne(criteria)
         
-        gig.createdAt = gig._id.getTimestamp()
+        if (gig) {
+            gig.createdAt = gig._id.getTimestamp()
+        }
         return gig
     } catch (err) {
         logger.error(`while finding gig ${gigId}`, err)
