@@ -1,13 +1,16 @@
+
 import { logger } from '../../services/logger.service.js'
 import { gigService } from './gig.service.js'
 
 export async function getGigs(req, res) {
     try {
         const filterBy = {
-            txt: req.query.txt || '',
+            title: req.query.title || '',
+            tags: req.query.tags ? req.query.tags.split(',') : [],
             minPrice: +req.query.minPrice || 0,
-            sortField: req.query.sortField || '',
-            sortDir: req.query.sortDir || 1,
+            maxPrice: +req.query.maxPrice || Infinity,
+            deliveryTime: req.query.deliveryTime || '',
+            sort: req.query.sort || '',
             pageIdx: req.query.pageIdx,
         }
         const gigs = await gigService.query(filterBy)

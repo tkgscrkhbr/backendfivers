@@ -1,3 +1,4 @@
+// gig.service.js
 import { ObjectId } from 'mongodb'
 import { logger } from '../../services/logger.service.js'
 import { dbService } from '../../services/db.service.js'
@@ -15,13 +16,13 @@ export const gigService = {
     removeGigMsg,
 }
 
-async function query(filterBy = { txt: '' }) {
+async function query(filterBy = { title: '', tags: [], minPrice: 0, maxPrice: Infinity, deliveryTime: '', sort: '' }) {
     try {
         const criteria = _buildCriteria(filterBy)
         const sort = _buildSort(filterBy)
 
         const collection = await dbService.getCollection('gig')
-        let gigCursor = collection.find(criteria, { sort })
+        let gigCursor = collection.find(criteria).sort(sort)
 
         if (filterBy.pageIdx !== undefined) {
             gigCursor = gigCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
@@ -34,6 +35,53 @@ async function query(filterBy = { txt: '' }) {
         throw err
     }
 }
+
+function _buildCriteria(filterBy) {
+    const criteria = {
+        title: { $regex: filterBy.title, $options: 'i' },
+        price: { $gte: filterBy.minPrice, $lte: filterBy.maxPrice },
+    }
+
+    if (filterBy.tags.length) {
+        criteria.tags = { $all: filterBy.tags }
+    }
+
+    if (filterBy.deliveryTime) {
+        switch (filterBy.deliveryTime) {
+            case 'express':
+                criteria.daysToMake = { $lte: 1 }
+                break;
+            case 'threeDays':
+                criteria.daysToMake = { $lte: 3 }
+                break;
+            case 'sevenDays':
+                criteria.daysToMake = { $lte: 7 }
+                break;
+            case 'anytime':
+                criteria.daysToMake = { $gte: 1 }
+                break;
+        }
+    }
+
+    return criteria
+}
+
+function _buildSort(filterBy) {
+    if (!filterBy.sort) return {}
+
+    const sort = {}
+    switch (filterBy.sort) {
+        case 'bestSelling':
+            sort.reviews = -1 // Assuming higher reviews indicate best selling
+            break;
+        case 'recommended':
+            sort.likedByUsers = -1
+            break;
+    }
+    return sort
+}
+
+// Other functions remain unchanged
 
 async function getById(gigId) {
     try {
@@ -127,18 +175,4 @@ async function removeGigMsg(gigId, msgId) {
         logger.error(`cannot remove gig msg ${gigId}`, err)
         throw err
     }
-}
-
-function _buildCriteria(filterBy) {
-    const criteria = {
-        title: { $regex: filterBy.txt, $options: 'i' },
-        price: { $gte: filterBy.minPrice },
-    }
-
-    return criteria
-}
-
-function _buildSort(filterBy) {
-    if (!filterBy.sortField) return {}
-    return { [filterBy.sortField]: filterBy.sortDir }
 }
