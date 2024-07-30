@@ -32,7 +32,6 @@ async function getById(orderId) {
         throw err;
     }
 }
-
 async function add(order) {
     try {
         const collection = await dbService.getCollection('order');
@@ -44,9 +43,10 @@ async function add(order) {
     }
 }
 
+
 async function update(orderId, status) {
     try {
-        const criteria = { _id: new (orderId) };
+        const criteria = { _id: new ObjectId(orderId) };
         const collection = await dbService.getCollection('order');
         await collection.updateOne(criteria, { $set: { status } });
         return { ...await getById(orderId), status }; // Return updated order
