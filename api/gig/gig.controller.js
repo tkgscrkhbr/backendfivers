@@ -1,4 +1,4 @@
-
+// gig.controller.js
 import { logger } from '../../services/logger.service.js'
 import { gigService } from './gig.service.js'
 
@@ -12,6 +12,7 @@ export async function getGigs(req, res) {
             deliveryTime: req.query.deliveryTime || '',
             sort: req.query.sort || '',
             pageIdx: req.query.pageIdx,
+            budget: req.query.budget || ''
         }
         const gigs = await gigService.query(filterBy)
         res.json(gigs)
