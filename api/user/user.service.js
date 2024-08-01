@@ -10,6 +10,7 @@ export const userService = {
     remove, // Delete (remove user)
     query, // List (of users)
     getByUsername, // Used for Login
+    getByFullname,
 };
 
 async function query(filterBy = {}) {
@@ -57,6 +58,18 @@ async function getByUsername(username) {
         return user;
     } catch (err) {
         logger.error(`while finding user by username: ${username}`, err);
+        throw err;
+    }
+}
+
+
+async function getByFullname(fullname) {
+    try {
+        const collection = await dbService.getCollection('user');
+        const user = await collection.findOne({ fullname });
+        return user;
+    } catch (err) {
+        logger.error(`while finding user by fullname: ${fullname}`, err);
         throw err;
     }
 }
