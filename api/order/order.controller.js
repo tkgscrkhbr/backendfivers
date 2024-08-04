@@ -32,7 +32,9 @@ export async function getOrderById(req, res) {
 
 export async function addOrder(req, res) {
     try {
-        const order = { ...req.body, buyer: req.user }; // Attach user info to the order
+        const order = { ...req.body, buyer: {...req.user, imgUrl: req.body.buyer.imgUrl} }; // Attach user info to the order
+        console.log('order',order);
+        
         const addedOrder = await orderService.add(order);
         res.json(addedOrder);
 
